@@ -3,39 +3,145 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Premium AI Resume Builder</title>
 
-<link rel="stylesheet" href="style.css">
+<!-- SEO Meta Tags -->
+<title>Premium AI Resume Builder – Create Professional Resumes in Seconds</title>
+<meta name="description" content="Build professional, premium resumes instantly with our AI Resume Builder. Generate PDF resumes and impress recruiters in seconds.">
+<meta name="keywords" content="resume builder, AI resume, professional resume, PDF resume, premium resume builder, online resume maker">
+<meta name="author" content="Your Name or Brand">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<!-- CSS -->
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{
+  background: radial-gradient(circle at top left,#1e3c72,#2a5298,#0f2027);
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:white;
+  padding:20px;
+}
+.main-card{
+  width:100%;
+  max-width:420px;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(20px);
+  border-radius:20px;
+  padding:30px;
+  box-shadow:0 20px 40px rgba(0,0,0,0.4);
+  animation:fadeIn 1s ease;
+}
+h1{font-weight:700;margin-bottom:10px;text-align:center;}
+p{opacity:0.8;margin-bottom:25px;text-align:center;}
+button{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:12px;
+  background:linear-gradient(45deg,#00f5a0,#00d9f5);
+  color:black;
+  font-weight:600;
+  cursor:pointer;
+  margin-top:15px;
+  transition:0.3s;
+}
+button:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 20px rgba(0,255,200,0.7);
+}
+input,textarea{
+  width:100%;
+  padding:12px;
+  margin-top:12px;
+  border:none;
+  border-radius:10px;
+  background:rgba(255,255,255,0.15);
+  color:white;
+  outline:none;
+}
+textarea{resize:none;}
+#formSection{display:none;margin-top:20px;}
+.preview-card{
+  margin-top:20px;
+  padding:15px;
+  border-radius:15px;
+  background:rgba(255,255,255,0.1);
+}
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:translateY(0);}
+}
+</style>
+
+<!-- jsPDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
 </head>
+
 <body>
 
 <div class="main-card">
 
-  <h1>Premium AI Resume Builder</h1>
-  <p>Create luxury resumes in seconds</p>
+<h1>AI Resume Builder</h1>
+<p>Create premium resume in seconds</p>
 
-  <button onclick="startBuilding()">Start Building</button>
+<button onclick="startBuilding()">Start Building</button>
 
-  <div id="formSection">
+<div id="formSection">
 
-    <input type="text" id="name" placeholder="Full Name">
-    <input type="text" id="role" placeholder="Job Role">
-    <textarea id="skills" placeholder="Skills (comma separated)"></textarea>
-    <textarea id="experience" placeholder="Experience"></textarea>
+<input type="text" id="name" placeholder="Full Name">
+<input type="text" id="role" placeholder="Job Role">
+<textarea id="skills" placeholder="Skills (comma separated)"></textarea>
 
-    <button onclick="generateResume()">Generate Resume</button>
-    <button onclick="aiFeature()">Generate AI Summary (Premium)</button>
-    <button onclick="downloadPDF()">Download PDF</button>
+<button onclick="generateResume()">Generate Resume</button>
+<button onclick="downloadPDF()">Download PDF</button>
 
-    <div id="preview" class="preview-card"></div>
-
-  </div>
+<div id="preview" class="preview-card"></div>
 
 </div>
+</div>
 
-<script src="main.js"></script>
+<script>
+// Show form
+function startBuilding(){
+  document.getElementById("formSection").style.display="block";
+}
+
+// Generate manual resume
+function generateResume(){
+  let name = document.getElementById("name").value;
+  let role = document.getElementById("role").value;
+  let skills = document.getElementById("skills").value;
+
+  document.getElementById("preview").innerHTML=
+    "<h2>"+(name || "Full Name")+"</h2>"+
+    "<p><b>Position:</b> "+(role || "Job Role")+"</p>"+
+    "<p><b>Skills:</b> "+(skills || "Skills")+"</p>"+
+    "<p><b>AI Summary:</b> Coming Soon 🚀</p>";
+}
+
+// Download PDF
+async function downloadPDF(){
+  const { jsPDF } = window.jspdf;
+  let doc = new jsPDF();
+
+  let name = document.getElementById("name").value || "Full Name";
+  let role = document.getElementById("role").value || "Job Role";
+  let skills = document.getElementById("skills").value || "Skills";
+
+  doc.setFontSize(18);
+  doc.text(name,20,30);
+
+  doc.setFontSize(12);
+  doc.text("Position: "+role,20,45);
+  doc.text("Skills: "+skills,20,60);
+
+  doc.save("resume.pdf");
+}
+</script>
 
 </body>
 </html>
