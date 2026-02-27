@@ -2,82 +2,134 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Resume Builder</title>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
 <style>
-body{
-font-family: Arial, sans-serif;
+
+*{
 margin:0;
 padding:0;
-background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-color:white;
-text-align:center;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
 }
 
-.container{
-padding:40px 20px;
+body{
+background: radial-gradient(circle at top left,#1e3c72,#2a5298,#0f2027);
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+color:white;
+padding:20px;
+}
+
+.main-card{
+width:100%;
+max-width:420px;
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(20px);
+border-radius:20px;
+padding:30px;
+box-shadow:0 20px 40px rgba(0,0,0,0.4);
+animation:fadeIn 1s ease;
+}
+
+h1{
+font-weight:700;
+margin-bottom:10px;
+}
+
+p{
+opacity:0.8;
+margin-bottom:25px;
 }
 
 button{
-padding:12px 25px;
+width:100%;
+padding:14px;
 border:none;
-border-radius:6px;
-background:#00c6ff;
-color:white;
-font-size:16px;
+border-radius:12px;
+background:linear-gradient(45deg,#00f5a0,#00d9f5);
+color:black;
+font-weight:600;
 cursor:pointer;
 margin-top:15px;
+transition:0.3s;
 }
 
-input, textarea{
-width:90%;
-padding:10px;
-margin:8px 0;
-border-radius:6px;
+button:hover{
+transform:scale(1.05);
+box-shadow:0 0 20px rgba(0,255,200,0.7);
+}
+
+input,textarea{
+width:100%;
+padding:12px;
+margin-top:12px;
 border:none;
+border-radius:10px;
+background:rgba(255,255,255,0.15);
+color:white;
+outline:none;
+}
+
+textarea{
+resize:none;
 }
 
 #formSection{
 display:none;
-background:white;
-color:black;
-padding:20px;
-border-radius:10px;
 margin-top:20px;
 }
+
+.preview-card{
+margin-top:20px;
+padding:15px;
+border-radius:15px;
+background:rgba(255,255,255,0.1);
+}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(20px);}
+to{opacity:1;transform:translateY(0);}
+}
+
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="main-card">
+
 <h1>AI Resume Builder</h1>
-<p>Create professional resume instantly</p>
+<p>Create premium resume in seconds</p>
 
 <button onclick="startBuilding()">Start Building</button>
 
 <div id="formSection">
 
-<h2>Enter Details</h2>
-
-<input type="text" id="name" placeholder="Full Name"><br>
-<input type="text" id="role" placeholder="Job Role"><br>
-<textarea id="skills" placeholder="Skills (comma separated)"></textarea><br>
+<input type="text" id="name" placeholder="Full Name">
+<input type="text" id="role" placeholder="Job Role">
+<textarea id="skills" placeholder="Skills (comma separated)"></textarea>
 
 <button onclick="generateResume()">Generate Resume</button>
 <button onclick="downloadPDF()">Download PDF</button>
 
-<div id="preview"></div>
+<div id="preview" class="preview-card"></div>
 
 </div>
+
 </div>
 
 <script>
 
 function startBuilding(){
 document.getElementById("formSection").style.display="block";
-window.scrollTo(0,document.body.scrollHeight);
 }
 
 function generateResume(){
@@ -87,7 +139,7 @@ let skills=document.getElementById("skills").value;
 
 document.getElementById("preview").innerHTML=
 "<h2>"+name+"</h2>"+
-"<p><b>Applying for:</b> "+role+"</p>"+
+"<p><b>Position:</b> "+role+"</p>"+
 "<p><b>Skills:</b> "+skills+"</p>";
 }
 
@@ -99,10 +151,12 @@ let name=document.getElementById("name").value;
 let role=document.getElementById("role").value;
 let skills=document.getElementById("skills").value;
 
-doc.text("Resume",20,20);
-doc.text("Name: "+name,20,30);
-doc.text("Applying for: "+role,20,40);
-doc.text("Skills: "+skills,20,50);
+doc.setFontSize(18);
+doc.text(name,20,30);
+
+doc.setFontSize(12);
+doc.text("Position: "+role,20,45);
+doc.text("Skills: "+skills,20,60);
 
 doc.save("resume.pdf");
 }
