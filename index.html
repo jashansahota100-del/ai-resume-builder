@@ -1,45 +1,113 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <title>AI Resume Builder</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 <style>
 body{
+font-family: Arial, sans-serif;
 margin:0;
-font-family:Arial;
-background:linear-gradient(135deg,#141e30,#243b55);
+padding:0;
+background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
 color:white;
 text-align:center;
 }
+
 .container{
-padding:60px 20px;
+padding:40px 20px;
 }
-h1{
-font-size:38px;
-}
-p{
-font-size:18px;
-opacity:0.8;
-}
+
 button{
 padding:12px 25px;
 border:none;
-border-radius:25px;
-background:white;
-color:#243b55;
-font-weight:bold;
+border-radius:6px;
+background:#00c6ff;
+color:white;
+font-size:16px;
 cursor:pointer;
+margin-top:15px;
 }
-button:hover{
-background:#ddd;
+
+input, textarea{
+width:90%;
+padding:10px;
+margin:8px 0;
+border-radius:6px;
+border:none;
+}
+
+#formSection{
+display:none;
+background:white;
+color:black;
+padding:20px;
+border-radius:10px;
+margin-top:20px;
 }
 </style>
 </head>
+
 <body>
+
 <div class="container">
-<h1>AI Resume Builder 🚀</h1>
-<p>Create professional resumes in seconds using AI.</p>
-<button>Start Building</button>
+<h1>AI Resume Builder</h1>
+<p>Create professional resume instantly</p>
+
+<button onclick="startBuilding()">Start Building</button>
+
+<div id="formSection">
+
+<h2>Enter Details</h2>
+
+<input type="text" id="name" placeholder="Full Name"><br>
+<input type="text" id="role" placeholder="Job Role"><br>
+<textarea id="skills" placeholder="Skills (comma separated)"></textarea><br>
+
+<button onclick="generateResume()">Generate Resume</button>
+<button onclick="downloadPDF()">Download PDF</button>
+
+<div id="preview"></div>
+
 </div>
+</div>
+
+<script>
+
+function startBuilding(){
+document.getElementById("formSection").style.display="block";
+window.scrollTo(0,document.body.scrollHeight);
+}
+
+function generateResume(){
+let name=document.getElementById("name").value;
+let role=document.getElementById("role").value;
+let skills=document.getElementById("skills").value;
+
+document.getElementById("preview").innerHTML=
+"<h2>"+name+"</h2>"+
+"<p><b>Applying for:</b> "+role+"</p>"+
+"<p><b>Skills:</b> "+skills+"</p>";
+}
+
+async function downloadPDF(){
+const { jsPDF } = window.jspdf;
+let doc=new jsPDF();
+
+let name=document.getElementById("name").value;
+let role=document.getElementById("role").value;
+let skills=document.getElementById("skills").value;
+
+doc.text("Resume",20,20);
+doc.text("Name: "+name,20,30);
+doc.text("Applying for: "+role,20,40);
+doc.text("Skills: "+skills,20,50);
+
+doc.save("resume.pdf");
+}
+
+</script>
+
 </body>
 </html>
