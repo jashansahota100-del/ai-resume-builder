@@ -4,107 +4,38 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Premium AI Resume Builder</title>
+
+<link rel="stylesheet" href="style.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
-body{background:#0f0f0f;display:flex;justify-content:center;align-items:center;min-height:100vh;color:white;padding:20px;}
-.container{width:100%;max-width:500px;background:#161616;border-radius:20px;padding:35px;box-shadow:0 20px 60px rgba(0,0,0,0.6);}
-h1{font-family:'Playfair Display',serif;font-size:28px;margin-bottom:8px;}
-.subtitle{color:#aaa;margin-bottom:25px;}
-button{width:100%;padding:14px;border:none;border-radius:12px;background:linear-gradient(45deg,#d4af37,#f6e27a);color:black;font-weight:700;cursor:pointer;margin-top:15px;transition:0.3s;}
-button:hover{transform:scale(1.04);}
-input,textarea,select{width:100%;padding:12px;margin-top:12px;border-radius:10px;border:1px solid #333;background:#1e1e1e;color:white;outline:none;}
-textarea{resize:none;}
-#formSection{display:none;margin-top:20px;}
-.resume-preview{background:white;color:black;margin-top:20px;padding:20px;border-radius:10px;}
-.resume-preview h2{margin-bottom:5px;}
-.section-title{margin-top:15px;font-weight:700;border-bottom:1px solid #ddd;padding-bottom:4px;}
-</style>
+
 </head>
 <body>
 
-<div class="container">
-<h1>AI Resume Builder</h1>
-<p class="subtitle">Luxury Professional Resume Generator</p>
-<button onclick="startBuilding()">Start Building</button>
+<div class="main-card">
 
-<div id="formSection">
-<input type="text" id="name" placeholder="Full Name">
-<input type="text" id="role" placeholder="Job Role">
-<textarea id="skills" placeholder="Skills (comma separated)"></textarea>
-<textarea id="experience" placeholder="Experience (optional)"></textarea>
+  <h1>Premium AI Resume Builder</h1>
+  <p>Create luxury resumes in seconds</p>
 
-<label style="margin-top:15px;">Choose Template:</label>
-<select id="template">
-<option value="corporate">Corporate</option>
-<option value="modern">Modern</option>
-<option value="minimal">Minimal</option>
-</select>
+  <button onclick="startBuilding()">Start Building</button>
 
-<button onclick="generateResume()">Generate Resume</button>
-<button onclick="aiPlaceholder()">Generate AI Summary (Premium)</button>
-<button onclick="downloadPDF()">Download PDF</button>
+  <div id="formSection">
 
-<div id="preview" class="resume-preview"></div>
-</div>
+    <input type="text" id="name" placeholder="Full Name">
+    <input type="text" id="role" placeholder="Job Role">
+    <textarea id="skills" placeholder="Skills (comma separated)"></textarea>
+    <textarea id="experience" placeholder="Experience"></textarea>
+
+    <button onclick="generateResume()">Generate Resume</button>
+    <button onclick="aiFeature()">Generate AI Summary (Premium)</button>
+    <button onclick="downloadPDF()">Download PDF</button>
+
+    <div id="preview" class="preview-card"></div>
+
+  </div>
+
 </div>
 
-<script>
-// Show form
-function startBuilding(){document.getElementById("formSection").style.display="block";}
+<script src="main.js"></script>
 
-// Manual preview
-function generateResume(){
-  let name=document.getElementById("name").value;
-  let role=document.getElementById("role").value;
-  let skills=document.getElementById("skills").value.split(",");
-  let experience=document.getElementById("experience").value;
-
-  let skillList="";
-  skills.forEach(skill=>{skillList+="<li>"+skill.trim()+"</li>";});
-
-  let previewHTML=`<h2>${name}</h2><p><b>Position:</b> ${role}</p>`;
-  if(experience.trim()!==""){previewHTML+=`<div class='section-title'>Experience</div><p>${experience}</p>`;}
-  previewHTML+=`<div class='section-title'>Professional Skills</div><ul>${skillList}</ul>`;
-
-  document.getElementById("preview").innerHTML=previewHTML;
-}
-
-// Premium placeholder
-function aiPlaceholder(){
-  alert("Premium AI summary feature coming soon! 🚀");
-}
-
-// PDF Download
-async function downloadPDF(){
-  const { jsPDF } = window.jspdf;
-  let doc=new jsPDF();
-
-  let name=document.getElementById("name").value;
-  let role=document.getElementById("role").value;
-  let skills=document.getElementById("skills").value.split(",");
-  let experience=document.getElementById("experience").value;
-
-  doc.setFont("helvetica","bold");
-  doc.setFontSize(20);
-  doc.text(name,20,30);
-
-  doc.setFont("helvetica","normal");
-  doc.setFontSize(12);
-  doc.text("Position: "+role,20,45);
-
-  doc.text("Skills:",20,55);
-  skills.forEach((s,i)=>{doc.text("- "+s.trim(),25,65+i*7);});
-
-  if(experience.trim()!==""){
-    let yStart=65+skills.length*7+5;
-    doc.text("Experience:",20,yStart);
-    doc.text(experience,25,yStart+7);
-  }
-
-  doc.save("Premium_Resume.pdf");
-}
-</script>
 </body>
 </html>
