@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Resume Builder - Premium</title>
+<title>Premium AI Resume Builder</title>
 
 <!-- jsPDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -48,6 +48,7 @@ textarea{resize:none;}
 </select>
 
 <button onclick="generateResume()">Generate Resume</button>
+<button onclick="generateAIResume()">Generate AI Summary (Premium)</button>
 <button onclick="downloadPDF()">Download PDF</button>
 
 <div id="preview" class="resume-preview"></div>
@@ -58,25 +59,28 @@ textarea{resize:none;}
 // Show form
 function startBuilding(){document.getElementById("formSection").style.display="block";}
 
-// Generate preview
+// Generate preview (manual)
 function generateResume(){
   let name=document.getElementById("name").value;
   let role=document.getElementById("role").value;
   let skills=document.getElementById("skills").value.split(",");
   let experience=document.getElementById("experience").value;
-  let template=document.getElementById("template").value;
 
-  // Format skills
   let skillList="";
   skills.forEach(skill=>{skillList+="<li>"+skill.trim()+"</li>";});
 
-  // Build resume based on template
-  let previewHTML=`<h2>${name}</h2><p><strong>Position:</strong> ${role}</p>`;
-
+  let previewHTML=`<h2>${name}</h2><p><b>Position:</b> ${role}</p>`;
   if(experience.trim()!==""){previewHTML+=`<div class='section-title'>Experience</div><p>${experience}</p>`;}
   previewHTML+=`<div class='section-title'>Professional Skills</div><ul>${skillList}</ul>`;
 
   document.getElementById("preview").innerHTML=previewHTML;
+}
+
+// AI Summary placeholder (for paid users)
+async function generateAIResume(){
+  alert("AI summary feature coming soon (paid feature). Backend required with OpenAI API.");
+  // When backend is ready:
+  // fetch('/generate-summary', ... ) → update preview
 }
 
 // Download PDF
@@ -89,21 +93,17 @@ async function downloadPDF(){
   let skills=document.getElementById("skills").value.split(",");
   let experience=document.getElementById("experience").value;
 
-  // PDF Header
   doc.setFont("helvetica","bold");
   doc.setFontSize(20);
   doc.text(name,20,30);
 
-  // Role
   doc.setFont("helvetica","normal");
   doc.setFontSize(12);
   doc.text("Position: "+role,20,45);
 
-  // Skills
   doc.text("Skills:",20,55);
   skills.forEach((s,i)=>{doc.text("- "+s.trim(),25,65+i*7);});
 
-  // Experience
   if(experience.trim()!==""){
     let yStart=65+skills.length*7+5;
     doc.text("Experience:",20,yStart);
