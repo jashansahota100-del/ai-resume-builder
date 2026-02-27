@@ -1,16 +1,11 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Premium AI Resume Builder</title>
-
-<!-- jsPDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-<!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
-
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
 body{background:#0f0f0f;display:flex;justify-content:center;align-items:center;min-height:100vh;color:white;padding:20px;}
@@ -27,8 +22,8 @@ textarea{resize:none;}
 .section-title{margin-top:15px;font-weight:700;border-bottom:1px solid #ddd;padding-bottom:4px;}
 </style>
 </head>
-
 <body>
+
 <div class="container">
 <h1>AI Resume Builder</h1>
 <p class="subtitle">Luxury Professional Resume Generator</p>
@@ -48,7 +43,7 @@ textarea{resize:none;}
 </select>
 
 <button onclick="generateResume()">Generate Resume</button>
-<button onclick="generateAIResume()">Generate AI Summary (Premium)</button>
+<button onclick="aiPlaceholder()">Generate AI Summary (Premium)</button>
 <button onclick="downloadPDF()">Download PDF</button>
 
 <div id="preview" class="resume-preview"></div>
@@ -59,7 +54,7 @@ textarea{resize:none;}
 // Show form
 function startBuilding(){document.getElementById("formSection").style.display="block";}
 
-// Generate preview (manual)
+// Manual preview
 function generateResume(){
   let name=document.getElementById("name").value;
   let role=document.getElementById("role").value;
@@ -76,14 +71,12 @@ function generateResume(){
   document.getElementById("preview").innerHTML=previewHTML;
 }
 
-// AI Summary placeholder (for paid users)
-async function generateAIResume(){
-  alert("AI summary feature coming soon (paid feature). Backend required with OpenAI API.");
-  // When backend is ready:
-  // fetch('/generate-summary', ... ) → update preview
+// Premium placeholder
+function aiPlaceholder(){
+  alert("Premium AI summary feature coming soon! 🚀");
 }
 
-// Download PDF
+// PDF Download
 async function downloadPDF(){
   const { jsPDF } = window.jspdf;
   let doc=new jsPDF();
